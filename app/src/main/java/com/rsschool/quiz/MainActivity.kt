@@ -1,9 +1,9 @@
 package com.rsschool.quiz
 
-import android.content.res.Resources
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentManager
 import com.rsschool.quiz.data.AnswersManager
 import com.rsschool.quiz.data.ContentManager
 import com.rsschool.quiz.databinding.ActivityMainBinding
@@ -27,7 +27,10 @@ class MainActivity : AppCompatActivity(), QuizNavigator {
 
     }
 
-    private fun openQuiz() {
+    override fun openQuiz() {
+        clearBackStack()
+        resetAnswers()
+        currentQuestion = 1
         setQuestionTheme()
         val tag = getString(R.string.question_fragment, currentQuestion)
         supportFragmentManager.beginTransaction()
@@ -44,13 +47,17 @@ class MainActivity : AppCompatActivity(), QuizNavigator {
     }
 
     override fun goToNextQuestion() {
-        when(currentQuestion) {
+        when (currentQuestion) {
             in 1 until ContentManager.questions.size -> {
                 currentQuestion++
                 setQuestionTheme()
                 val tag = getString(R.string.question_fragment, currentQuestion)
                 supportFragmentManager.beginTransaction()
-                    .replace(binding.container.id, QuestionFragment.newInstance(currentQuestion), tag)
+                    .replace(
+                        binding.container.id,
+                        QuestionFragment.newInstance(currentQuestion),
+                        tag
+                    )
                     .addToBackStack(null)
                     .commit()
             }
@@ -59,30 +66,51 @@ class MainActivity : AppCompatActivity(), QuizNavigator {
     }
 
     override fun goToResults() {
-        //TODO: open ResultFragment
+        supportFragmentManager.beginTransaction()
+            .replace(binding.container.id, ResultFragment.newInstance())
+            .commit()
+    }
+
+    override fun exitApp() {
+        finish()
     }
 
     private fun setQuestionTheme() {
         setTheme(
-            when(currentQuestion) {
+            when (currentQuestion) {
                 1 -> R.style.Theme_Quiz_First.also {
-                    window.statusBarColor = ContextCompat.getColor(this, R.color.deep_orange_100_dark)
+                    window.statusBarColor =
+                        ContextCompat.getColor(this, R.color.deep_orange_100_dark)
                 }
                 2 -> R.style.Theme_Quiz_Second.also {
                     window.statusBarColor = ContextCompat.getColor(this, R.color.yellow_100_dark)
                 }
                 3 -> R.style.Theme_Quiz_Third.also {
-                    window.statusBarColor = ContextCompat.getColor(this, R.color.light_green_100_dark)
+                    window.statusBarColor =
+                        ContextCompat.getColor(this, R.color.light_green_100_dark)
                 }
                 4 -> R.style.Theme_Quiz_Fourth.also {
                     window.statusBarColor = ContextCompat.getColor(this, R.color.cyan_100_dark)
                 }
                 else -> R.style.Theme_Quiz_Fifth.also {
-                    window.statusBarColor = ContextCompat.getColor(this, R.color.deep_purple_100_dark)
+                    window.statusBarColor =
+                        ContextCompat.getColor(this, R.color.deep_purple_100_dark)
                 }
             }
         )
     }
 
+    private fun resetAnswers() {
+        AnswersManager.answerIds = IntArray(ContentManager.questions.size) { 5 }
+    }
 
+    private fun clearBackStack() {
+        with(supportFragmentManager) {
+            for (fragment in fragments) {
+                beginTransaction().remove(fragment).commit()
+            }
+            //Remove all the previous fragments in back stack
+            popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        }
+    }
 }

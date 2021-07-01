@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/fr_tv_quiz_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:gravity="center"
+        android:textSize="32sp"
+        tools:text="Quiz result: 5/5" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/fr_btn_share_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:padding="16dp"
+        android:text="@string/share_btn"
+        app:icon="@drawable/ic_round_share_24"
+        app:iconPadding="16dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/fr_btn_try_again"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:padding="16dp"
+        android:text="@string/try_again_btn"
+        app:icon="@drawable/ic_round_autorenew_24"
+        app:iconPadding="16dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/fr_btn_exit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:padding="16dp"
+        android:text="@string/exit_btn"
+        app:icon="@drawable/ic_round_exit_to_app_24"
+        app:iconPadding="16dp" />
+
+</LinearLayout>

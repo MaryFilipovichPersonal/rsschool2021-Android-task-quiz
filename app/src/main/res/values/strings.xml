@@ -3,4 +3,8 @@
     <string name="question_fragment">QuestionFragment%d</string>
     <string name="toolbar_name">Question %d</string>
     <string name="submit_button">Submit</string>
+    <string name="share_btn">Share</string>
+    <string name="try_again_btn">Try Again</string>
+    <string name="exit_btn">Exit</string>
+    <string name="quiz_result">Quiz result: %d%%</string>
 </resources>

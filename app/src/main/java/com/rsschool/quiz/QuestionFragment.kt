@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.rsschool.quiz.data.AnswersManager
 import com.rsschool.quiz.data.ContentManager
@@ -34,16 +35,6 @@ class QuestionFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        getQuestionNumber()
-
-        setUI()
-
-        setListeners()
-    }
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is QuizNavigator) {
@@ -61,17 +52,30 @@ class QuestionFragment : Fragment() {
         super.onDestroyView()
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        getQuestionNumber()
+
+        setUI()
+
+        setListeners()
+    }
+
     private fun getQuestionNumber() {
         arguments?.let { bundle ->
             questionNum = bundle.getInt(QUESTION_NUMBER)
-            answerId = AnswersManager.answersId[questionNum - 1]
+            answerId = AnswersManager.answerIds[questionNum - 1]
         }
     }
 
     private fun setUI() {
         with(binding) {
             when (questionNum) {
-                1 -> fqPreviousButton.visibility = View.INVISIBLE
+                1 -> {
+                    fqPreviousButton.visibility = View.INVISIBLE
+                    fqToolbar.navigationIcon = null
+                }
                 5 -> fqNextButton.text = getString(R.string.submit_button)
             }
             fqToolbar.title = getString(R.string.toolbar_name, questionNum)
@@ -84,7 +88,7 @@ class QuestionFragment : Fragment() {
                 fqOptionFive.text = answers[4]
                 if (answerId < 5) {
                     (fqRadioGroup.getChildAt(answerId) as RadioButton).isChecked = true
-                    setNextButtonEnabled(true)
+                    setNextButtonEnabled()
                 }
             }
         }
@@ -123,25 +127,25 @@ class QuestionFragment : Fragment() {
 
     private fun setRadioGroupStateChangeListener() {
         with(binding.fqRadioGroup) {
-            setOnCheckedChangeListener { group, checkedId ->
+            setOnCheckedChangeListener { _, checkedId ->
                 val index = indexOfChild(findViewById(checkedId))
                 answerId = index
-                AnswersManager.answersId[questionNum - 1] = answerId
-                setNextButtonEnabled(true)
+                AnswersManager.answerIds[questionNum - 1] = answerId
+                setNextButtonEnabled()
             }
         }
     }
 
-    private fun setNextButtonEnabled(state: Boolean) {
+    private fun setNextButtonEnabled(state: Boolean = true) {
         binding.fqNextButton.isEnabled = state
     }
 
     companion object {
         @JvmStatic
         fun newInstance(questionNumber: Int) = QuestionFragment().apply {
-            val args = Bundle()
-            args.putInt(QUESTION_NUMBER, questionNumber)
-            arguments = args
+            arguments = bundleOf(
+                QUESTION_NUMBER to questionNumber
+            )
         }
 
         private const val QUESTION_NUMBER = "QUESTION_NUMBER"
