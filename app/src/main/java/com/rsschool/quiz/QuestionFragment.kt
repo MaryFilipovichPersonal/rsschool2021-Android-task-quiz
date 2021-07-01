@@ -9,7 +9,7 @@ import android.widget.RadioButton
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.rsschool.quiz.data.AnswersManager
-import com.rsschool.quiz.data.ContentManager
+import com.rsschool.quiz.data.QuestionsManager
 import com.rsschool.quiz.databinding.FragmentQuestionBinding
 import com.rsschool.quiz.interfaces.QuizNavigator
 
@@ -79,7 +79,7 @@ class QuestionFragment : Fragment() {
                 5 -> fqNextButton.text = getString(R.string.submit_button)
             }
             fqToolbar.title = getString(R.string.toolbar_name, questionNum)
-            with(ContentManager.questions[questionNum - 1]) {
+            with(QuestionsManager.questions[questionNum - 1]) {
                 fqQuestion.text = question
                 fqOptionOne.text = answers[0]
                 fqOptionTwo.text = answers[1]

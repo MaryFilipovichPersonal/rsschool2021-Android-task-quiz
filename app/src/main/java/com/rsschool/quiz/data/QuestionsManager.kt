@@ -1,11 +1,10 @@
 package com.rsschool.quiz.data
 
-object ContentManager {
+object QuestionsManager {
     val questions = listOf(
         Question(
-            1,
             "What is the smallest planet in our solar system?",
-            arrayOf(
+            arrayListOf(
                 "Mars",
                 "Neptune",
                 "Saturn",
@@ -15,9 +14,8 @@ object ContentManager {
             3
         ),
         Question(
-            2,
             "Name the composer behind the soundtracks of The Lion King, Inception and Pirates of the Caribbean.",
-            arrayOf(
+            arrayListOf(
                 "Howard Ashman",
                 "Hanz Zimmer",
                 "Scott Bradley",
@@ -27,9 +25,8 @@ object ContentManager {
             1
         ),
         Question(
-            3,
             "What is the capital city of Australia?",
-            arrayOf(
+            arrayListOf(
                 "Melbourne",
                 "Newcastle",
                 "Brisbane",
@@ -39,9 +36,8 @@ object ContentManager {
             4
         ),
         Question(
-            4,
             "How many notes are there in a musical scale?",
-            arrayOf(
+            arrayListOf(
                 "7",
                 "5",
                 "9",
@@ -51,9 +47,8 @@ object ContentManager {
             0
         ),
         Question(
-            5,
             "What colour are most buses in London?",
-            arrayOf(
+            arrayListOf(
                 "Blue",
                 "Yellow",
                 "Red",

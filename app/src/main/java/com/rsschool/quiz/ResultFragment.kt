@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.rsschool.quiz.data.AnswersManager
-import com.rsschool.quiz.data.ContentManager
+import com.rsschool.quiz.data.QuestionsManager
 import com.rsschool.quiz.databinding.FragmentResultBinding
 import com.rsschool.quiz.interfaces.QuizNavigator
 
@@ -108,7 +108,7 @@ class ResultFragment : Fragment() {
     }
 
     private fun getQuizReport(): String {
-        val questionsWithAnswers = ContentManager.questions.zip(AnswersManager.answerIds.toList())
+        val questionsWithAnswers = QuestionsManager.questions.zip(AnswersManager.answerIds.toList())
         val report = StringBuilder()
         with(report) {
             appendLine("Hello! My quiz result: $quizResult%")
@@ -133,7 +133,7 @@ class ResultFragment : Fragment() {
     private fun calculateResult(): Int = with(AnswersManager) {
         (answerIds.filterIndexed
         { index, answerId ->
-            answerId == ContentManager.questions[index].correctAnswerId
+            answerId == QuestionsManager.questions[index].correctAnswerId
         }.size * 100) / answerIds.size
     }
 

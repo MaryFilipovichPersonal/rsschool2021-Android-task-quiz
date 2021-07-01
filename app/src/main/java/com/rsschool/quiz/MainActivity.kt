@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import com.rsschool.quiz.data.AnswersManager
-import com.rsschool.quiz.data.ContentManager
+import com.rsschool.quiz.data.QuestionsManager
 import com.rsschool.quiz.databinding.ActivityMainBinding
 import com.rsschool.quiz.interfaces.QuizNavigator
 
@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity(), QuizNavigator {
 
     override fun goToNextQuestion() {
         when (currentQuestion) {
-            in 1 until ContentManager.questions.size -> {
+            in 1 until QuestionsManager.questions.size -> {
                 currentQuestion++
                 setQuestionTheme()
                 val tag = getString(R.string.question_fragment, currentQuestion)
@@ -102,7 +102,7 @@ class MainActivity : AppCompatActivity(), QuizNavigator {
     }
 
     private fun resetAnswers() {
-        AnswersManager.answerIds = IntArray(ContentManager.questions.size) { 5 }
+        AnswersManager.answerIds = IntArray(QuestionsManager.questions.size) { 5 }
     }
 
     private fun clearBackStack() {
