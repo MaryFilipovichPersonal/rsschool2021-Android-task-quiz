@@ -66,6 +66,7 @@ class MainActivity : AppCompatActivity(), QuizNavigator {
     }
 
     override fun goToResults() {
+        clearBackStack()
         supportFragmentManager.beginTransaction()
             .replace(binding.container.id, ResultFragment.newInstance())
             .commit()
@@ -106,11 +107,7 @@ class MainActivity : AppCompatActivity(), QuizNavigator {
 
     private fun clearBackStack() {
         with(supportFragmentManager) {
-            for (fragment in fragments) {
-                beginTransaction().remove(fragment).commit()
-            }
-            //Remove all the previous fragments in back stack
-            popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         }
     }
 }
